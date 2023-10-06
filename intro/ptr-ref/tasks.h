@@ -2,7 +2,7 @@
 #include <math.h>
 #include <algorithm>
 #include <limits>
-
+#include <ostream>
 #pragma once
 
 namespace NPointers {
@@ -60,6 +60,8 @@ namespace NPointers {
         long long* result = new long long(static_cast<long long>(a) * static_cast<long long>(b));
         return result;
     }
+    
+    
     /* To implement:
     Increment
     Multiply
@@ -94,6 +96,7 @@ namespace NReferences {
             return 0;
         }
     }
+    
     /* To implement:
     MultiplyInplace
     CompareArraysByAverage

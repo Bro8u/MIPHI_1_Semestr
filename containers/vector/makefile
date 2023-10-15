@@ -1,5 +1,4 @@
 SOURCES := $(wildcard *.cpp)
-HEADERS := $(wildcard *.h)
 RESULT := main
 SCRIPTS := $(wildcard *.sh)
 SCRIPT_TARGETS := $(SCRIPTS:.sh=_run)
@@ -26,14 +25,14 @@ run: compile
 %_run: %.sh
 	/bin/bash $<
 
-compile: $(RESULT) $(SCRIPT_TARGETS)
+compile: $(SOURCES) $(RESULT) $(SCRIPT_TARGETS)
 
-
-$(OBJECTS): %.o: %.cpp $(HEADERS)
-	g++ $(CFLAGS) -c $< -o $@
+.cpp.o: $(wildcard *.h)
+	g++ -c $(CFLAGS) $< -o $@
 
 $(RESULT): $(OBJECTS)
-	g++ $(LDFLAGS) $(OBJECTS) -o $(RESULT)
+	g++ $(OBJECTS) $(LDFLAGS) -o $(RESULT)
 
 clean:
 	rm -f $(OBJECTS) $(RESULT)
+

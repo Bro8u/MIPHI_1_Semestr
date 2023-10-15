@@ -10,10 +10,12 @@ void CheckOutputOperator() {
     Array a = Array(5, out, 5);
 
     getline(out, ans);
+    
     assert(ans == "Constructed with default. Result Array's capacity is 10 and size is 5, elements are: 5, 5, 5, 5, 5");
 
     out << a << "\n";
     getline(out, ans);
+
     assert(ans == "Result Array's capacity is 10 and size is 5, elements are: 5, 5, 5, 5, 5");
 }
 
@@ -27,6 +29,7 @@ void CheckDefaultConstructor() {
         assert(ans == "Constructed. Result Array's capacity is 2 and size is 0");
     }
     getline(out, ans);
+    
     assert(ans == "Destructed 0");
 }
 
@@ -74,6 +77,7 @@ void CheckCopyConstructorWithResize() {
 
         Array other = Array(array);
         getline(out, ans);
+        
         assert(ans == "Constructed from another Array. Result Array's capacity is 10 and size is 10, elements are: 9, 8, 7, 6, 5, 4, 3, 2, 1, 0");
 
         out << array << "\n";
@@ -176,8 +180,11 @@ void CheckCapacityWithResizeAndBoolOperator() {
     a.Resize(1);
     a.Reserve(100);
     assert(a.Capacity() == 100 && a.Size() == 1 && a);
+    
     a.Resize(0);
+ 
     a.Reserve(1);
+    
     assert(a.Capacity() == 100 && a.Size() == 0 && !a);
 }
 
@@ -195,8 +202,9 @@ void CheckConcat() {
 
     a << 123 << 345 << 456 << 1 << 5 << 81;
     b << 234 << 345 << 0 << 9;
-
+ 
     a << b;
+
     out << a << "\n";
     const std::array<std::string, 4> prefix = {"Result", "Array's", "capacity", "is"};
     for (const std::string& res : prefix) {
@@ -205,7 +213,7 @@ void CheckConcat() {
     }
     {
         int tmp;
-        out >> tmp; //read capacity
+        out >> tmp; // read capacity
     }
     getline(out, ans);
     assert(ans == " and size is 10, elements are: 123, 345, 456, 1, 5, 81, 234, 345, 0, 9"); // check suffix

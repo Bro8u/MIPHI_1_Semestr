@@ -33,7 +33,7 @@
 * `int& operator [](const size_t& i)` - осуществляет доступ к элементу int и возвращает ссылку на элемент
 * `operator bool() const` - Возвращает пустой массив или нет (true означает, что массив непустой)
 * `Array& operator <<(const int& value)` - реализуешь `PushBack(int)`
-* `Array& operator <<(const Array& other)` - "дописывает" второй массив в конец к первому
+* `Array& operator <<(const Array& other)` - "дописывает" второй массив в конец к первому 
 * `bool operator <(const Array& it) const` - оператор лексикографического сравнения на меньше
 * Другие операторы сравнения, которые выражаются через "меньше"
   * `bool operator >(const Array& it) const`

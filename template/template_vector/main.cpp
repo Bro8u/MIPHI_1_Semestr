@@ -60,7 +60,6 @@ void TestImplementation(const initializer_list<T>& il, const initializer_list<pa
     assert(arr1 < arr2);
     sort(&arr1[0], &arr1[arr1.Size()], greater<T>());
     assert(arr1 > arr2);
-
     size_t insertedCount = 0;
     for (const auto& valPos : toInsert) {
         assert(arr1.Insert(valPos.second, valPos.first));
@@ -68,16 +67,26 @@ void TestImplementation(const initializer_list<T>& il, const initializer_list<pa
         assert(arr1[valPos.second] == valPos.first);
     }
     assert(!arr1.Insert(arr1.Size() + 1, arr1[0]));
-
+    
     assert(arr1.Size() == arr2.Size() + insertedCount);
-
+    
     assert(arr1[1] != arr1[0]);
     const T oldFirstElem = arr1[0], oldSecondElem = arr1[1];
     const size_t oldSize = arr1.Size();
+    
+    
     assert(arr1.Erase(0));
+    
+    
     assert(arr1[0] != oldFirstElem);
+    
     assert(arr1[0] == oldSecondElem);
     assert(arr1.Size() == oldSize - 1);
+    // cout << '\n';
+    // for (int i = 0; i < (int)arr1.Size(); ++i) {
+    //     cout << arr1[i] << ' ';
+    // }
+    // cout << '\n';
     assert(!arr1.Erase(arr1.Size() + 1));
     assert(arr1.Size() == oldSize - 1);
 }

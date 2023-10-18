@@ -48,7 +48,6 @@ public:
             delete[] data_;
             data_ = newData;
         }
-        
     }
     void Resize(size_t newSize) {
         if (size_ >= newSize) {

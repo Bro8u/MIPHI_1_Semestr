@@ -35,4 +35,3 @@ $(RESULT): $(OBJECTS)
 
 clean:
 	rm -f $(OBJECTS) $(RESULT)
-

@@ -55,7 +55,7 @@ public:
     Range(const int64_t start, const int64_t end, const int64_t step) : start_(start), end_(end), step_(step) {}
 
     int64_t Size() const {
-        return (abs(end_ - start_) + abs(step_) - 1) / abs(step_);
+        return (labs(end_ - start_) + labs(step_) - 1) / labs(step_);
     }
 
 private:

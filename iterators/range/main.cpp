@@ -31,15 +31,15 @@ bool operator==(const Range& range, const std::vector<int64_t>& vec) {
     if (range.Size() != static_cast<int64_t>(vec.size())) {
         return false;
     }
+
     auto range_iter = range.begin();
     auto vec_iter = vec.begin();
     while (range.end() != range_iter && vec.end() != vec_iter) {
-        
         if (*vec_iter++ != *range_iter++) {
-            
             return false;
         }
     }
+
     return range_iter == range.end() && vec_iter == vec.end();
 }
 
@@ -59,7 +59,7 @@ void TestSimple() {
     assert(Range(100) == GenerateSequence(100));
     assert(Range(0) == GenerateSequence(0));
     assert(Range(1) == GenerateSequence(1));
-    
+
     assert(Range(10, 99, 34) == GenerateSequence(10, 99, 34));
     assert(Range(10, 99, 3400) == GenerateSequence(10, 99, 3400));
     assert(Range(88, 11, -3) == GenerateSequence(88, 11, -3));

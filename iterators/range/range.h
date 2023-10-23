@@ -61,8 +61,3 @@ public:
 private:
     const int64_t start_, end_, step_;
 };
-
-
-
-
-

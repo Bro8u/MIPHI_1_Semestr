@@ -1,7 +1,7 @@
 #include <cassert>
 #include <algorithm>
 #include "task.h"
-
+#include <iostream>
 using namespace std;
 
 int main() {
@@ -9,9 +9,9 @@ int main() {
 
     auto reversedList = l;
     reverse(l.begin(), l.end());
-
+    
     ReverseList(l);
-
+    
     assert(l == reversedList);
     return 0;
 }

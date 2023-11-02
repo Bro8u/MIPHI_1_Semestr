@@ -19,7 +19,7 @@ namespace std {
             size_t h1 = hash<std::string>()(k.StrPart);
             size_t h2 = hash<int>()(k.IntPart);
             size_t h3 = hash<float>()(k.FloatPart);
-            return h1 ^ (h2 << 1) + h3;
+            return h1 ^ ((h2 << 1) + h3);
         }
     };
 }

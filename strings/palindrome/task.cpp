@@ -2,7 +2,7 @@
 
 bool is_palindrome(const std::string& s) {
     std::string now = "";
-    for (int i = 0; i < s.size(); ++i) {
+    for (int i = 0; i < (int)s.size(); ++i) {
         if ( (isalpha(s[i])) ) {
             now += tolower(s[i]);
         }

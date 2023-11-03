@@ -30,7 +30,7 @@ string normalize(string_view path) {
     way.push_back(now);
     vector<int> used(way.size(), 1);
     index = 0;
-    while (index < way.size()) {
+    while (index < (int)way.size()) {
         if (way[index] == "..") {
             if (path[0] == '/') {
                 if (index > 0) {
@@ -71,7 +71,7 @@ string normalize(string_view path) {
         if (path[0] == '/') {
             ans = "/";
         }
-        for (int i = 0; i < used.size(); ++i) {
+        for (int i = 0; i < (int)used.size(); ++i) {
             if (used[i]) {
                 ans += way[i] + "/";
             }

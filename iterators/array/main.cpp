@@ -25,7 +25,7 @@ namespace {
         }
     };
 
-    std::ostream& operator<<(std::ostream& out, const TestData& data) {
+    [[maybe_unused]] std::ostream& operator<<(std::ostream& out, const TestData& data) {
         out << '{' << data.first << ", " << data.second << ", " << data.third << ", " << data.fourth << '}';
         return out;
     }

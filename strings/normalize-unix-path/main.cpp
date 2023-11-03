@@ -4,6 +4,7 @@
 using namespace std;
 
 int main() {
+    // cout << normalize("../../foo/././bar/../bar/./baz//1.txt") << '\n';
     assert(normalize("/../../foo/././bar/../bar/./baz//1.txt") == "/foo/bar/baz/1.txt");
     assert(normalize("../../foo/././bar/../bar/./baz//1.txt") == "../../foo/bar/baz/1.txt");
     assert(normalize("..") == "..");

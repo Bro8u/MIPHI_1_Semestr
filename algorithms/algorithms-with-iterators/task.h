@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <iterator>
+#include <iostream>
+#include <algorithm>
 
 /*
  * Нужно написать функцию, которая принимает на вход диапазон, применяет к каждому элементу данную операцию и затем складывает результат применения операции в новый диапазон
@@ -10,6 +12,11 @@
 
 template<class InputIt, class OutputIt, class UnaryOperation>
 void Transform(InputIt firstIn, InputIt lastIn, OutputIt firstOut, UnaryOperation op) {
+    while (firstIn != lastIn) {
+        *firstOut = op(*firstIn);
+        ++firstIn;
+        ++firstOut;
+    }
 }
 
 /*
@@ -21,6 +28,18 @@ void Transform(InputIt firstIn, InputIt lastIn, OutputIt firstOut, UnaryOperatio
 
 template<class BidirIt, class UnaryPredicate>
 void Partition(BidirIt first, BidirIt last, UnaryPredicate p) {
+    --last;
+    while (first < last) {
+        if (!p(*first)) {
+            while (first < last && !p(*last)) {
+                --last;
+            }
+            if (p(*last)) {
+                iter_swap(first, last);  
+            }
+        }
+        ++first;
+    }
 }
 
 /*
@@ -28,6 +47,18 @@ void Partition(BidirIt first, BidirIt last, UnaryPredicate p) {
  */
 template<class InputIt1, class InputIt2, class OutputIt>
 void Merge(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt firstOut) {
+
+    while (first1 < last1 && first2 < last2) {
+        if (*first1 <= *first2) {
+            *firstOut = *first1;
+            ++first1;
+        }
+        else {
+            *firstOut = *first2;
+            ++first2;
+        }
+        ++firstOut;
+    }
 }
 
 
@@ -48,33 +79,61 @@ public:
         using reference = value_type&;
         using iterator_category = std::input_iterator_tag;
 
+        Iterator(const uint64_t* ptr) : ptr_(ptr) {}
+
         value_type operator *() const {
             // разыменование итератора -- доступ к значению
+            return *ptr_;
         }
 
         Iterator& operator ++() {
             // prefix increment
+            ++ptr_;
+            return *this;
         }
-
         Iterator operator ++(int) {
             // postfix increment
+            Iterator help = *this;
+            ++(*this);
+            return help;
         }
 
         bool operator ==(const Iterator& rhs) const {
+            if (ptr_ == rhs.ptr_) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         bool operator <(const Iterator& rhs) const {
+            if (ptr_ < rhs.ptr_) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
+
+    private:
+        const uint64_t* ptr_;
     };
 
-    FibonacciRange(size_t amount) {}
+    FibonacciRange(size_t amount) : begin_(1), end_(amount) {}
 
     Iterator begin() const {
+        return Iterator(&begin_);
     }
 
     Iterator end() const {
+        return Iterator(&end_);
     }
 
     size_t size() const {
+        return end_;
     }
+private:
+    uint64_t begin_, end_;
+    
 };

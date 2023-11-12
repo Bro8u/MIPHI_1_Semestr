@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <cstdint>
 #include <iterator>
 #include <iostream>
 #include <algorithm>
@@ -135,5 +136,5 @@ public:
     }
 private:
     uint64_t begin_, end_;
-    
+
 };

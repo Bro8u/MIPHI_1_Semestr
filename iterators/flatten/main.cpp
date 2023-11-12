@@ -1,5 +1,5 @@
 #include "flatten.h"
-
+#include <iostream>
 #if defined(_LIBCPP_LIST) || defined(_LIBCPP_DEQUE) || defined(_LIBCPP_FORWARD_LIST)
 #error "include list or deque forbidden"
 #endif
@@ -177,6 +177,7 @@ void TestSimple() {
 void TestEmpty() {
     for (auto vector : {std::vector<std::vector<TestData>>{}, std::vector<std::vector<TestData>>{{}, {}}}) {
         FlattenedVector<TestData> fv(vector);
+        std::cout << *fv.begin() << '\n';
         assert(std::distance(fv.begin(), fv.end()) == 0);
         assert(fv.begin() == fv.end());
         for (auto x : fv) {
@@ -193,6 +194,7 @@ void TestModify() {
         const auto it = flattened_vector.begin() + 42;
         const char old_value = *it;
         const char new_value = old_value + 1;
+        std::cout << *it << "sex\n";
         *it = new_value;
         assert(*it == new_value);
 

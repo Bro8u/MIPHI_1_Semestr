@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <iterator>
 #include <iostream>
-#include <algorithm>
+
 
 /*
  * Нужно написать функцию, которая принимает на вход диапазон, применяет к каждому элементу данную операцию и затем складывает результат применения операции в новый диапазон
@@ -13,7 +13,8 @@
 
 template<class InputIt, class OutputIt, class UnaryOperation>
 void Transform(InputIt firstIn, InputIt lastIn, OutputIt firstOut, UnaryOperation op) {
-    while (firstIn != lastIn) {
+    
+    while (firstIn < lastIn) {
         *firstOut = op(*firstIn);
         ++firstIn;
         ++firstOut;
@@ -29,14 +30,20 @@ void Transform(InputIt firstIn, InputIt lastIn, OutputIt firstOut, UnaryOperatio
 
 template<class BidirIt, class UnaryPredicate>
 void Partition(BidirIt first, BidirIt last, UnaryPredicate p) {
+    if (first == last) {
+        return;
+    }
     --last;
+    // cout << first << ' ' << last << '\n';
     while (first < last) {
         if (!p(*first)) {
-            while (first < last && !p(*last)) {
+            while (first != last && !p(*last)) {
                 --last;
             }
             if (p(*last)) {
-                iter_swap(first, last);  
+                int help = *last;
+                *last = *first;
+                *first = help;
             }
         }
         ++first;
@@ -49,20 +56,30 @@ void Partition(BidirIt first, BidirIt last, UnaryPredicate p) {
 template<class InputIt1, class InputIt2, class OutputIt>
 void Merge(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt firstOut) {
 
-    while (first1 < last1 && first2 < last2) {
-        if (*first1 <= *first2) {
-            *firstOut = *first1;
-            ++first1;
+    while (first1 < last1 || first2 < last2) {
+        if (first1 < last1 && first2 < last2){
+            if (*first1 <= *first2) {
+                *firstOut = *first1;
+                ++first1;
+            }
+            else {
+                *firstOut = *first2;
+                ++first2;
+            }
         }
         else {
-            *firstOut = *first2;
-            ++first2;
+            if (first1 < last1) {
+                *firstOut = *first1;
+                ++first1;
+            }
+            else{
+                *firstOut = *first2;
+                ++first2;
+            }
         }
         ++firstOut;
     }
 }
-
-
 /*
  * Напишите класс "диапазон чисел Фибоначчи"
  * Экземпляр класса представляет из себя диапазон от первого до N-го числа Фибоначчи (1, 2, 3, 5, 8, 13 и т.д.)
@@ -80,23 +97,28 @@ public:
         using reference = value_type&;
         using iterator_category = std::input_iterator_tag;
 
-        Iterator(const uint64_t* ptr) : ptr_(ptr) {}
+        Iterator(uint64_t pr, uint64_t ptr) : pr_(pr), ptr_(ptr){}
 
         value_type operator *() const {
             // разыменование итератора -- доступ к значению
-            return *ptr_;
+            return pr_;
         }
 
         Iterator& operator ++() {
             // prefix increment
-            ++ptr_;
+            uint64_t help = ptr_;
+            ptr_ += pr_;
+            pr_ = help;
+            // std::cout << *ptr_ << ' ' << *pr_ << '\n';
             return *this;
         }
         Iterator operator ++(int) {
             // postfix increment
-            Iterator help = *this;
-            ++(*this);
-            return help;
+            Iterator result = *this;
+            uint64_t help = ptr_;
+            ptr_ += pr_;
+            pr_ = help;
+            return result;
         }
 
         bool operator ==(const Iterator& rhs) const {
@@ -116,25 +138,42 @@ public:
                 return false;
             }
         }
-
+        friend std::ostream& operator<<(std::ostream& ostream, const Iterator& array);
     private:
-        const uint64_t* ptr_;
+        uint64_t pr_;
+        uint64_t ptr_;
     };
 
-    FibonacciRange(size_t amount) : begin_(1), end_(amount) {}
+    FibonacciRange(size_t amount) {
+        amount_= amount;
+        int64_t prev1 = 1, prev2 = 2;
+        for (int i = 3; i <= amount + 2; ++i) {
+            int64_t help = prev2;
+            prev2 = prev1 + prev2;
+            prev1 = help;
+        }
+        prevlast_ = prev1;
+        last_ = prev2;
+    }
 
     Iterator begin() const {
-        return Iterator(&begin_);
+        return Iterator(1, 2);
     }
 
     Iterator end() const {
-        return Iterator(&end_);
+        return Iterator(prevlast_, last_);
     }
-
+    // bool operator=()
     size_t size() const {
-        return end_;
+        return amount_;
     }
 private:
-    uint64_t begin_, end_;
-
+    size_t amount_;
+    uint64_t prevlast_;
+    uint64_t last_;
 };
+std::ostream& operator << (std::ostream& ostream, const FibonacciRange::Iterator& array) {
+    ostream.clear();
+    ostream << array.ptr_  << " and prev is " << array.pr_;
+    return ostream;
+}

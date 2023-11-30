@@ -1,5 +1,8 @@
+#include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
+#include <functional>
 
 std::vector<std::unique_ptr<std::string>> Duplicate(const std::vector<std::shared_ptr<std::string>>& vec) {
     std::vector<std::unique_ptr<std::string>> dup;

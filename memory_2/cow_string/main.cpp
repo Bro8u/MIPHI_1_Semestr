@@ -64,7 +64,7 @@ void TestCowProperties() {
     const auto* addr2 = &string.At(2);
 
     {
-        CowString copy_string(string);
+        CowString copy_string(string);                                                      
         assert(copy_string.Size() == 5);
         assert(&copy_string.At(2) == addr2);
         assert(&copy_string.At(2) == addr2);
@@ -94,7 +94,7 @@ void TestCowProperties() {
         assert(copy_string.At(2) == *addr2);
     }
 
-    {
+    { 
         CowString string2;
         string2.PushBack('0');
         string2.PushBack('1');

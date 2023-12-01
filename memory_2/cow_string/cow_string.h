@@ -9,7 +9,6 @@ class CowString {
 public:
     CowString() : data_(new State{1, new char[2], 0, 2}) {}
     CowString(const CowString& other) {
-        data_ = new State;
         data_ = other.data_;
         ++data_->ref_count;
     }
@@ -21,6 +20,7 @@ public:
         }
     }
     CowString& operator=(const CowString& other) {
+        if (this == &other){ return *this; }
         --data_->ref_count;
         if (data_->ref_count == 0) {
             delete[] data_->ptr_;

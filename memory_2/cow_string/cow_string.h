@@ -29,7 +29,7 @@ public:
     char& operator[](size_t index) {
         if (data_->ref_count > 1) {
             State* newData_ = new State{1, new char[data_->capacity_], data_->size_, data_->capacity_};
-            for (int i = 0; i < data_->size_; ++i) {
+            for (size_t i = 0; i < data_->size_; ++i) {
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
@@ -52,7 +52,7 @@ public:
         }
         if (data_->ref_count > 1) {
             State* newData_ = new State{1, new char[data_->capacity_], data_->size_, data_->capacity_};
-            for (int i = 0; i < data_->size_; ++i) {
+            for (size_t i = 0; i < data_->size_; ++i) {
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
@@ -76,7 +76,7 @@ public:
     void Reserve(size_t capacity) {
         if (data_->ref_count > 1) {
             State* newData_ = new State{1, new char[data_->capacity_], data_->size_, data_->capacity_};
-            for (int i = 0; i < data_->size_; ++i) {
+            for (size_t i = 0; i < data_->size_; ++i) {
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
@@ -88,7 +88,7 @@ public:
         }
         if (capacity > data_->capacity_) {
             char* newPtr_ = new char[capacity];
-            for (int i = 0; i < data_->size_; ++i) {
+            for (size_t i = 0; i < data_->size_; ++i) {
                 newPtr_[i] = data_->ptr_[i];
             }
             delete[] data_->ptr_;
@@ -99,7 +99,7 @@ public:
     void Resize(size_t size) {
         if (data_->ref_count > 1) {
             State* newData_ = new State{1, new char[data_->capacity_], data_->size_, data_->capacity_};
-            for (int i = 0; i < data_->size_; ++i) {
+            for (size_t i = 0; i < data_->size_; ++i) {
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
@@ -117,7 +117,7 @@ public:
             return;    
         }  
         char* newPtr_ = new char[data_->capacity_];
-        for (int i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size; ++i) {
             newPtr_[i] = data_->ptr_[i];
         }
         delete[] data_->ptr_;

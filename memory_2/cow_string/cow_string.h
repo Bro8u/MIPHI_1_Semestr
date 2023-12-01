@@ -1,15 +1,24 @@
 #include <cstring>
 struct State {
-    int ref_count; // сколько строк используют этот State.
+    int ref_count = 0; // сколько строк используют этот State.
     char* ptr_;
-    size_t size_, capacity_;
+    size_t size_ = 0, capacity_ = 2;
 };
 
 class CowString {
 public:
     CowString() : data_(new State{1, new char[2], 0, 2}) {}
-    CowString(const CowString& other) : data_(other.data_) {
+    CowString(const CowString& other) {
+        data_ = new State;
+        data_ = other.data_;
         ++data_->ref_count;
+    }
+    ~CowString() {
+        --data_->ref_count;
+        if (data_->ref_count == 0) {
+            delete[] data_->ptr_;
+            delete data_;
+        }
     }
     CowString& operator=(const CowString& other) {
         --data_->ref_count;

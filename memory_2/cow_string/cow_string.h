@@ -26,9 +26,8 @@ public:
             delete[] data_->ptr_;
             delete data_;
         }
-        data_ = new State;
-        ++other.data_->ref_count;
         data_ = other.data_;
+        ++data_->ref_count;
         return *this; 
     }
     
@@ -42,10 +41,6 @@ public:
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
-            if (data_->ref_count == 0) {
-                delete[] data_->ptr_;
-                delete data_;
-            }
             data_ = newData_;
         }
         return data_->ptr_[index];
@@ -65,10 +60,6 @@ public:
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
-            if (data_->ref_count == 0) {
-                delete[] data_->ptr_;
-                delete data_;
-            }
             data_ = newData_;
         }
         data_->ptr_[data_->size_] = c;
@@ -89,10 +80,6 @@ public:
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
-            if (data_->ref_count == 0) {
-                delete[] data_->ptr_;
-                delete data_;
-            }
             data_ = newData_;
         }
         if (capacity > data_->capacity_) {
@@ -112,10 +99,6 @@ public:
                 newData_->ptr_[i] = data_->ptr_[i];
             }
             --data_->ref_count;
-            if (data_->ref_count == 0) {
-                delete[] data_->ptr_;
-                delete data_;
-            }
             data_ = newData_;
         }
         if (size > data_->size_) {

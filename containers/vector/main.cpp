@@ -240,6 +240,43 @@ void CheckComparisonOperator() {
     b.Resize(2);
     assert(a == b);
     assert(a <= b);
+    
+    {
+        a.Resize(0);
+        b.Resize(0);
+
+        a << 1 << 2 << 3 << 9;
+        b << 1 << 2 << 4 << 1;
+
+        assert(a < b);
+        assert(b > a);
+        assert(a <= b);
+        assert(a != b);
+    }
+
+    {
+        a.Resize(0);
+        b.Resize(0);
+
+        a << 1 << 2 << 3;
+        b << 1 << 2 << 3;
+
+        assert(a == b);
+        assert(a <= b);
+        assert(b <= a);
+    }
+
+    {
+        a.Resize(0);
+        b.Resize(0);
+
+        a << 1;
+        b << 0 << 9 << 9 << 9;
+
+        assert(a > b);
+        assert(a >= b);
+        assert(a != b);
+    }
 }
 
 int main() {

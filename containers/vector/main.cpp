@@ -223,40 +223,29 @@ void CheckComparisonOperator() {
     std::stringstream out;
     std::string ans;
 
-    Array a = Array(out);
-    Array b = Array(out);
-
-    a << 123 << 345 << 456 << 1 << 5 << 81;
-    b << 234 << 345 << 0 << 9;
-
-    assert(a < b);
-    assert(a <= b);
-    assert(b > a);
-    assert(b >= a);
-    assert(a != b);
-
-    a.Resize(2);
-    a[0] = 234;
-    b.Resize(2);
-    assert(a == b);
-    assert(a <= b);
-    
     {
-        a.Resize(0);
-        b.Resize(0);
+        Array a = Array(out);
+        Array b = Array(out);
 
-        a << 1 << 2 << 3 << 9;
-        b << 1 << 2 << 4 << 1;
+        a << 123 << 345 << 456 << 1 << 5 << 81;
+        b << 234 << 345 << 0 << 9;
 
         assert(a < b);
-        assert(b > a);
         assert(a <= b);
+        assert(b > a);
+        assert(b >= a);
         assert(a != b);
+
+        a.Resize(2);
+        a[0] = 234;
+        b.Resize(2);
+        assert(a == b);
+        assert(a <= b);
     }
 
     {
-        a.Resize(0);
-        b.Resize(0);
+        Array a = Array(out);
+        Array b = Array(out);
 
         a << 1 << 2 << 3;
         b << 1 << 2 << 3;
@@ -267,8 +256,8 @@ void CheckComparisonOperator() {
     }
 
     {
-        a.Resize(0);
-        b.Resize(0);
+        Array a = Array(out);
+        Array b = Array(out);
 
         a << 1;
         b << 0 << 9 << 9 << 9;
@@ -276,6 +265,57 @@ void CheckComparisonOperator() {
         assert(a > b);
         assert(a >= b);
         assert(a != b);
+    }
+
+    {
+        Array a = Array(out);
+        Array b = Array(out);
+
+        a << 123 << 321;
+        b << 1 << 11 << 111;
+
+        a.Resize(0);
+        b.Resize(0);
+
+        a << 1 << 1 << 1;
+        b << 1 << 2;
+
+        assert(a < b);
+        assert(b >= a);
+        assert(a != b);
+    }
+
+    {
+        Array a = Array(out);
+        Array b = Array(out);
+
+        a << 14 << 18;
+
+        assert(a > b);
+        assert(b < a);
+        assert(a >= b);
+        assert(b <= a);
+        assert(a != b);
+
+        a.Resize(0);
+
+        assert(a == b);
+        assert(a <= b);
+        assert(!(a != b));
+        assert(!(a < b));
+    }
+    
+    {
+        Array a = Array(out);
+
+        a << 4 << 2 << 3;
+
+        assert(a == a);
+        assert(!(a != a));
+        assert(!(a < a));
+        assert(!(a > a));
+        assert(a <= a);
+        assert(a >= a);
     }
 }
 

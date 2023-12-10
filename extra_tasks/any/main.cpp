@@ -2,6 +2,8 @@
 
 #if defined(_GLIBCXX_ANY) || defined(_LIBCPP_ANY)
 #error "include any forbidden"
+#else
+#include <any>
 #endif
 
 #include <cassert>
@@ -91,7 +93,7 @@ void CopyTest() {
         assert(c.Value<int>() == 5);
 
         Any e = Any(std::string("abcde"));
-        e = e;
+        e = [&e]() -> const Any& { return e; }();
 
         assert(e.Value<std::string>() == "abcde");
 

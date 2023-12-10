@@ -15,6 +15,7 @@
 #undef DEF
 
 #include <cassert>
+#include <cstdint>
 #include <functional>
 #include <map>
 #include <numeric>

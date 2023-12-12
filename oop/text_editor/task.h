@@ -193,6 +193,9 @@ public:
     void VisitMoveToEndCommand(MoveToEndCommand& command) final;
     void VisitMoveToStartCommand(MoveToStartCommand& command) final;
     void VisitDeleteWordCommand(DeleteWordCommand& command) final;
+    void Flush() {
+        logStream_.flush();
+    }
 private:
     std::ostream& logStream_;
 };

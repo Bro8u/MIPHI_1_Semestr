@@ -1,4 +1,5 @@
 #include "task.h"
+#include <iostream>
 #include <cassert>
 #include <sstream>
 
@@ -98,15 +99,15 @@ void TestCopyPaste() {
             .AddSubcommand(CB(CommandBuilder::Type::MoveCursorDown).build())
             .AddSubcommand(CB(CommandBuilder::Type::MoveToStart).build())
             .build();
-
+    
     ApplyMultiple(editor, macroCommand, 3);
+
     assert(editor.GetText() == "Fedor was here\nFedor was here\nFedor is cool\n");
 }
 
 void TestLogging() {
     TextEditor editor;
     std::stringstream logStream;
-
     editor.ApplyCommand(CB(CommandBuilder::Type::InsertText).LogTo(logStream).Text("Quick brown fox jumps\nover the lazy dog").build());
     editor.ApplyCommand(CB(CommandBuilder::Type::MoveCursorUp).LogTo(logStream).build());
     editor.ApplyCommand(CB(CommandBuilder::Type::MoveToStart).LogTo(logStream).build());
@@ -117,12 +118,12 @@ void TestLogging() {
     editor.ApplyCommand(CB(CommandBuilder::Type::CopyText).LogTo(logStream).build());
     editor.ApplyCommand(CB(CommandBuilder::Type::DeleteWord).LogTo(logStream).build());
     editor.ApplyCommand(CB(CommandBuilder::Type::PasteText).LogTo(logStream).build());
-
     assert(editor.GetText() == "Quick brown fox jumps\nover the lazy dog");
 
     ApplyMultiple(editor, CB(CommandBuilder::Type::MoveCursorLeft).LogTo(logStream).build(), 26);
     editor.ApplyCommand(CB(CommandBuilder::Type::SelectText).LogTo(logStream).SelectionSize(5).build());
     editor.ApplyCommand(CB(CommandBuilder::Type::UppercaseText).LogTo(logStream).build());
+    
     assert(editor.GetText() == "QUICK brown fox jumps\nover the lazy dog");
 
     editor.ApplyCommand(CB(CommandBuilder::Type::SelectText).LogTo(logStream).SelectionSize(5).build());
@@ -140,7 +141,7 @@ void TestLogging() {
 
     ApplyMultiple(editor, macroCommand, 2);
     assert(editor.GetText() == "Fedor brown fox jumps\nFedor the lazy dog");
-
+    
     assert(logStream.str() == "ik0j$0vydEphhhhhhhhhhhhhhhhhhhhhhhhhhvUvudEij0dEij0");
 }
 

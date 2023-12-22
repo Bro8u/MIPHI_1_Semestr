@@ -45,7 +45,7 @@ void TestOneLine() {
 
 void TestCopyPaste() {
     TextEditor editor;
-
+    
     editor.ApplyCommand(CB(CommandBuilder::Type::InsertText).Text("Vasya was here\n").build());
     assert(editor.GetText() == "Vasya was here\n");
     assert(editor.GetCursorPosition() == 15);

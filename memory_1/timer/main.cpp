@@ -1,5 +1,5 @@
 #include "timer.h"
-
+#include <iostream>
 #include <cassert>
 #include <chrono>
 #include <cmath>

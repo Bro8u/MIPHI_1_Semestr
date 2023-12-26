@@ -1,6 +1,11 @@
+
 #include <iostream>
+#include <cassert>
 #include <chrono>
+#include <cmath>
+#include <sstream>
 #include <string>
+#include <thread>
 
 class Timer {
 public:
@@ -30,10 +35,12 @@ public:
         //std::chrono::duration<double, std::milli> em = std::chrono::steady_clock::now() - start_;
         // std::chrono::milliseconds tim = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_);
         int ans = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_).count();
-        std::stringstream a;
-        a << std::to_string(ans);
+        // std::cout << ans << '\n';
+        ostream_ << "Elapsed time: " << ans << " ";
+        // std::stringstream a;
+        // a << std::to_string(ans);
         // std::string ansStr = a.str();
-        a;
+        // a;
     }
 private:
     std::chrono::steady_clock::time_point start_;

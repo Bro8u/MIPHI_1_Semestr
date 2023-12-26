@@ -11,33 +11,30 @@ public:
 
     void Put(const K& key, const V& value) {
         if (M.find(key) != M.end()) {
-            M[key] = value;
-            Q.remove(key);
-            Q.push_front(key);
+            M[key]->second = value;
+            Q.splice(Q.begin(), Q, M[key]);
         }
         else {
-            Q.push_front(key);
-            M.insert({key, value});
+            Q.push_front({key, value});
+            M.insert({key, Q.begin()});
             if (Q.size() > max_size && Q.size() > 0) {
-                M.erase(Q.back());
+                M.erase(Q.back().first);
                 Q.pop_back();
             }
         }
-        
-        
     }
 
     bool Get(const K& key, V* value) {
         if (M.find(key) != M.end()) {
-            *value = M[key];
-            Q.remove(key);
-            Q.push_front(key);
+            *value = M[key]->second;
+            Q.splice(Q.begin(), Q, M[key]);
             return true;
         }
         return false;
     }
 private:
     size_t max_size;
-    std::list<K> Q;
-    std::unordered_map<K, V> M;
+    std::list<std::pair<K, V>> Q;
+    std::unordered_map<K, typename std::list<std::pair<K, V>>::iterator> M;
 };
+ 

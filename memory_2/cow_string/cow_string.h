@@ -83,7 +83,7 @@ public:
     }
 private:
     State* data_;
-
+    
     void check() {
         if (data_->ref_count > 1) {
             State* newData_ = new State{1, new char[data_->capacity_], data_->size_, data_->capacity_};
